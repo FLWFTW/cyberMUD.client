@@ -1,0 +1,196 @@
+<html lang="en">
+<!--
+   Name: noMUDde MUD Client
+   Description: A basic MUD client built on node.js using sockets.io and express
+   Author: William Sayin
+   Date: 18 August 2017
+   License: Create Commons: Attribution Share-Alike 4.0 International License
+-->
+<head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/>
+      <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+      <title>-=][CyberMUD][=-</title>
+      <link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono|Roboto+Mono|Source+Code+Pro|VT323|Inconsolata|Nanum+Gothic+Coding|Ubuntu+Mono" rel="stylesheet">
+      <link rel="stylesheet" href="./css/style.css">
+      <link rel="stylesheet" href="./css/colors.css">
+      <link rel="stylesheet" href="./css/crt.css">
+      <link rel="stylesheet" href="./css/icons.css">
+      <!--jquery Stuff-->
+      <script src="./js/jquery/jquery-3.3.1.min.js"></script>
+      <script src="./js/jquery/jquery-ui-1.12.1/jquery-ui.js"></script>
+      <link rel="stylesheet" href="./js/jquery/themes/themes/base/jquery-ui.css">
+      <link rel="stylesheet" href="./js/jquery/themes/themes/base/theme.css">
+
+      <script src="https://www.darkstonemud.com:8181/socket.io/socket.io.js"></script>
+      <script src="./js/aux.js"></script>
+      <script src="./js/interpret.js"></script>
+      <script src="./js/main.js"></script>
+      <script src="./js/ui.js"></script>
+   </head>
+   <body>
+      <div id='wrapper' class='crt'>
+         <div id='options-menu'>&hellip;</div>
+         <div id='header'>
+            <!-- <h1 class='title'>CyberMUD</h1>-->
+         </div>
+            <div id='left-window'>
+               <div id='left-show-hide'>&#9654;</div>
+               <div id='player-data'>
+                  <div class='label' id='player-name'>NULL</div>
+                  <div id='body-mesh'>
+                     <div id='body-status'>
+                        <table id='player-health-table' style='width: 100%'>
+                           <tr>
+                              <td>Head:</td><td id='player-head-status' style='text-align: left'></td>
+                              <td rowspan="14" style='width: 50%'>
+                                 <img src='./images/male-mesh/male-mesh-head-blue.png' id='body-mesh-head' class='body-mesh-graphic'></img>
+                                 <img src='./images/male-mesh/male-mesh-eyes-blue.png' id='body-mesh-eyes' class='body-mesh-graphic'></img>
+                                 <img src='./images/male-mesh/male-mesh-neck-blue.png' id='body-mesh-neck' class='body-mesh-graphic'></img>
+                                 <img src='./images/male-mesh/male-mesh-larm-blue.png' id='body-mesh-larm' class='body-mesh-graphic'></img>
+                                 <img src='./images/male-mesh/male-mesh-rarm-blue.png' id='body-mesh-rarm' class='body-mesh-graphic'></img>
+                                 <img src='./images/male-mesh/male-mesh-torso-blue.png' id='body-mesh-torso' class='body-mesh-graphic'></img>
+                                 <img src='./images/male-mesh/male-mesh-lleg-blue.png' id='body-mesh-lleg' class='body-mesh-graphic'></img>
+                                 <img src='./images/male-mesh/male-mesh-rleg-blue.png' id='body-mesh-rleg' class='body-mesh-graphic'></img>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>Eyes:</td><td id='player-eyes-status' style='text-align: left'></td>
+                           </tr>
+                           <tr>
+                              <td>Neck:</td><td id='player-neck-status' style='text-align: left'></td>
+                           </tr>
+                           <tr>
+                              <td>Torso:</td><td id='player-torso-status' style='text-align: left'></td>
+                           </tr>
+                           <tr>
+                              <td>L. Arm:</td><td id='player-larm-status' style='text-align: left'></td>
+                           </tr>
+                           <tr>
+                              <td>R. Arm:</td><td id='player-rarm-status' style='text-align: left'></td>
+                           </tr>
+                           <tr>
+                              <td>L. Leg:</td><td id='player-lleg-status' style='text-align: left'></td>
+                           </tr>
+                           <tr>
+                              <td>R. Leg:</td><td id='player-rleg-status' style='text-align: left'></td>
+                           </tr>
+                           <tr>
+                              <td>Health:</td><td id='player-health' style='text-align: left;'></td>
+                           </tr>
+                           <tr>
+                              <td>Load: </td><td id='player-encumberance' style='text-align: left;'></td>
+                           </tr>
+                           <tr>
+                              <td>Signal: </td><td id='player-signal' style='text-align: left;'></td>
+                           </tr>
+                           <tr>
+                              <td>Bandwidth:&nbsp; </td><td id='player-bandwidth' style='text-align: left;'></td>
+                           </tr>
+                           <tr>
+                              <td>BTC: </td><td id='player-btc' style='text-align: left;'></td>
+                           </tr>
+                           <tr>
+                              <td>Position:</td><td id='player-position' style='text-align: left;'></td>
+                           </tr>
+                        </table>
+                     </div>
+                  </div><!--body-mesh-->
+                  <br>
+                  <div id='skill-data'>
+                     <div class='label'>SKILLS</div>
+                     <table id='skill-table'>
+                        <tr>
+                           <td>Combat</td><td id='skill-combat'></td>
+                        </tr>
+                        <tr>
+                           <td>Engineering&nbsp;&nbsp;&nbsp;</td><td id='skill-engineering'></td>
+                        </tr>
+                        <tr>
+                           <td>Subterfuge</td><td id='skill-subterfuge'></td>
+                        </tr>
+                        <tr>
+                           <td>Medicine</td><td id='skill-medicine'></td>
+                        </tr>
+                        <tr>
+                           <td>Personality</td><td id='skill-personality'></td>
+                        </tr>
+                     </table><!--skill-table-->
+                  </div><!--skill-data-->
+               </div><!--player-data-->
+            </div><!--left-window-->
+            <div id='right-window'>
+               <div id='right-show-hide'>&#9664;</div>
+               <div id='player-chat'>
+                  <div class='label'>COMMUNICATIONS</div>
+                  <div id='player-chat-content'>
+                  </div>
+               </div>
+               <div id='location-window'>
+                  <div class='label'>GEODATA</div>
+                  <div id='location-data'>
+                  </div><!--location-data-->
+               </div><!--location-window-->
+            </div><!--right-window-->
+            <div id='bottom-window'>
+               <div id='bottom-show-hide'>&#9650;</div>
+               <div id='overflow-wrap'>
+                     <div id='globe-box'>
+                        <div id='outer-globe'>
+                           <div id='globe'>
+                              <div id='globe-scale'>
+                                 &nbsp;1000<br>&nbsp;900<br>&nbsp;800<br>&nbsp;700<br>&nbsp;600<br>&nbsp;500<br>&nbsp;400<br>&nbsp;300<br>&nbsp;200<br>&nbsp;100<br>&nbsp;0<br>-100<br>-200<br>-300<br>-400<br>-500<br>-600<br>-700<br>-800<br>-900<br>-1000
+                              </div>
+                           </div>
+                           <div id='globe-north' class='globe-arrow' hidden><span class='direction' id='globe-north-arrow' data-direction='north' style='pointer-events:auto;'>&and;</span></div>
+                           <div id='globe-south' class='globe-arrow' hidden><span class='direction' id='globe-south-arrow' data-direction='south' style='pointer-events:auto;'>&and;</span></div>
+                           <div id='globe-east' class='globe-arrow' hidden><span class='direction' id='globe-east-arrow' data-direction='east' style='pointer-events:auto;'>&and;</span></div>
+                           <div id='globe-west' class='globe-arrow' hidden><span class='direction' id='globe-west-arrow' data-direction='west' style='pointer-events:auto;'>&and;</span></div>
+                           <div id='globe-northeast' class='globe-arrow' hidden><span class='direction' id='globe-northeast-arrow' data-direction='northeast' style='pointer-events:auto;'>&and;</span></div>
+                           <div id='globe-southeast' class='globe-arrow' hidden><span class='direction' id='globe-southeast-arrow' data-direction='southeast' style='pointer-events:auto;'>&and;</span></div>
+                           <div id='globe-northwest' class='globe-arrow' hidden><span class='direction' id='globe-northwest-arrow' data-direction='northwest' style='pointer-events:auto;'>&and;</span></div>
+                           <div id='globe-southwest' class='globe-arrow' hidden><span class='direction' id='globe-southwest-arrow' data-direction='southwest' style='pointer-events:auto;'>&and;</span></div>
+                        </div><!--outer-globe-->
+                     </div><!--globe-box-->
+                     <div id='room'>
+                        <span id='room-name' class='color-room-name'></span><br>
+                        <span id='room-desc' class='color-room-desc'></span><br>
+                        <span id='room-exits' class='ansi0'></span><br>
+                     </div>
+                  </div><!--overflow-wrap-->
+               </div><!--bottom-window-->
+          <div id='client'>
+            <div class='toolbar' id='toolbar' hidden>
+               <select id='font-size'> 
+                  <option value='8'>            8</option>
+                  <option value='10'>          10</option>
+                  <option value='12'>          12</option>
+                  <option value='14' selected> 14</option>
+                  <option value='16'>          16</option>
+                  <option value='18'>          18</option>
+                  <option value='20'>          20</option>
+                  <option value='22'>          22</option>
+                  <option value='24'>          24</option>
+                  <option value='28'>          28</option>
+                  <option value='36'>          36</option>
+               </select>
+            </div><!--toolbar-->
+            <div id='output-wrapper'>
+            <div id='output'> 
+            </div><!--output-->
+            </div><!--output-wrapper-->
+            <form id='input_form'>
+               <input type='text' id='input' autocomplete='off'>
+               <input type='button' id='connect' value='Connect'>
+            </form><!--input-form-->
+            <form id='password_form' style='display:none' autocomplete='off'>
+               <input type='password' id='pw_input'>
+               <input type='button' id='connect' value='Connect'>
+            </form><!--password-form-->
+         </div><!--client-->
+      </div><!--wrapper-->
+      <div id='contextmenu'>
+      </div>
+   </body>
+</html>
+

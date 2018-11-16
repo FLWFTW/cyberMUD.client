@@ -1,0 +1,90 @@
+/* file: colors.css
+ * desc: classes for different ANSI color codes
+ * 12 August 2017
+ */
+
+.ansi0{ color: white; background-color: transparent; text-decoration: none; font-style: normal;  }
+.c0m{ color: white; background-color: transparent; text-decoration: none; font-style: normal;  }
+.cm{ color: white; background-color: transparent; text-decoration: none; font-style: normal;  }
+.ansi3{ font-style: italic }
+.ansi4{ text-decoration: underline }
+.ansi5{ text-decoration: blink }
+.ansi7{ -webkit-filter: invert(100%); filter: invert(100%); }
+.ansi9{ text-decoration: line-through }
+.
+/*Regular Foreground Colors*/
+.c30m{ color: #000000; }  /*Black*/
+.c31m{ color: #800000; }  /*Red*/
+.c32m{ color: #006400; }  /*Green*/
+.c33m{ color: #FF8C00; }  /*Yellow*/
+.c34m{ color: #00008B; }  /*Blue*/
+.c35m{ color: #800080; }  /*Magenta*/
+.c36m{ color: #008080; }  /*Cyan*/
+.c37m{ color: #C0C0C0; }  /*White*/
+
+/*Bright Foreground Colors*/
+.B30m{ color: #555555; }
+.B31m{ color: #FF0000; }
+.B32m{ color: #7CFC00; }
+.B33m{ color: #FFFF00; }
+.B34m{ color: #6495ED; }
+.B35m{ color: #FF69B4; }
+.B36m{ color: #00FFFF; }
+.B37m{ color: #FFFFFF; }
+
+/*Background Colors*/
+.c40m{ background-color: transparent; }
+.c41m{ background-color: #800000; }
+.c42m{ background-color: #006400; }
+.c43m{ background-color: #FF8C00; }
+.c44m{ background-color: #00008B; } 
+.c45m{ background-color: #800080; }
+.c46m{ background-color: #008080; }
+.c47m{ background-color: #C0C0C0; }
+.c50m{ background-color: transparent; }
+.c51m{ background-color: #800000; }
+.c52m{ background-color: #006400; }
+.c53m{ background-color: #FF8C00; }
+.c54m{ background-color: #00008B; } 
+.c55m{ background-color: #800080; }
+.c56m{ background-color: #008080; }
+.c57m{ background-color: #C0C0C0; }
+
+/*Repeated to work with the c/B
+ * brightness specifier even though
+ * it doesn't matter for the
+ * background colors*/
+.B40m{ background-color: transparent; }
+.B41m{ background-color: #800000; }
+.B42m{ background-color: #006400; }
+.B43m{ background-color: #FF8C00; }
+.B44m{ background-color: #00008B; } 
+.B45m{ background-color: #800080; }
+.B46m{ background-color: #008080; }
+.B47m{ background-color: #C0C0C0; }
+.B50m{ background-color: transparent; }
+.B51m{ background-color: #800000; }
+.B52m{ background-color: #006400; }
+.B53m{ background-color: #FF8C00; }
+.B54m{ background-color: #00008B; } 
+.B55m{ background-color: #800080; }
+.B56m{ background-color: #008080; }
+.B57m{ background-color: #C0C0C0; }
+
+.color-say{ color: #FF8C00; }
+.color-log{ color: #800080; }
+.color-chat{ color: #88d3d8; }
+.color-tell{ color: #FFFF00; }
+.color-room-name{ color: #C0C0C0; }
+.color-room-desc{ color: #FFFF00; }
+.color-mob{ color: #FF69B4; }
+.color-obj{ color: #006400; }
+.color-inventory{ color: #FFFF00; }
+.color-normal{ color: #C0C0C0; }
+.color-red{ color: #FF0000; }
+.color-objects{ color: #006400; }
+
+.color-text{ color: #C0C0C0; }
+.color-{ color: #C0C0C0; }
+.color-error{ color: #C0C0C0; font-style: italic; }
+
