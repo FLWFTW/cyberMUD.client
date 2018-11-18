@@ -1,7 +1,7 @@
 # cyberMUD.client
-Custom web client for the cyberMUD project
+Custom web client for the cyberMUD project (https://github.com/FLWFTW/cyberMUD)
 
-*Based off the noMUDde project https://github.com/FLWFTW/noMUDde
+Based off the noMUDde project (https://github.com/FLWFTW/noMUDde)
 
 Screenshots:
 ![client screenshot](https://i.imgur.com/nGeSmpR.jpg)
