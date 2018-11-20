@@ -84,4 +84,13 @@ io.on( 'connection',
                      client.write( cmd + '\n' );
                   }
                });
+         socket.on( 'disconnect',
+               function()
+               {
+                  if( !client.destroyed )
+                  {
+                     client.write( "save\nquit\n0\n" );
+                  }
+               });
       });
+

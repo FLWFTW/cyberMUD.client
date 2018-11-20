@@ -279,6 +279,19 @@ a.output:hover
    font-family: 'Roboto mono', monospace;
 }
 
+input
+{
+   position: relative;
+   background: transparent;
+   height: 2em;
+   padding: 0px 5px 0px 5px;
+   bottom: 0%;
+   color: var(--font-color);
+   font-weight: bold;
+   border: 1px solid var(--border-color);
+   box-shadow: 0 0 2px 1px var(--shadow-color);
+   font-family: 'Roboto mono', monospace;
+}
 #connect
 {
    display: none;
@@ -435,4 +448,27 @@ li.contextlink:hover, li.contextDocLink:hover
 {
    color: black;
    background-color: var(--border-color);
+}
+
+
+#chargen-wrapper
+{
+   position: absolute;
+   left: 50%;
+   transform: translateX( -50% );
+   top: 1em;
+   width: 45vw;
+   height: 85vh;
+   color: var(--font-color);
+   background: -webkit-linear-gradient(to bottom right, rgba(05,08,13,0.90), rgba(41,43,45,0.95) ); /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to bottom right, rgba(05,08,13,0.90), rgba(41,43,45,0.95) ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+   padding: 0px 10px 10px 10px;
+   border: 1px solid var(--border-color);
+   box-shadow: 0 0 2px 1px var(--shadow-color);
+   padding: 1em;
+}
+
+.stat-clicker
+{
+   width: 4em;
 }

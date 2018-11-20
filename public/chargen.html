@@ -1,0 +1,50 @@
+<html lang="en">
+<!--
+   Name: noMUDde MUD Client
+   Description: A basic MUD client built on node.js using sockets.io and express
+   Author: William Sayin
+   Date: 18 August 2017
+   License: Create Commons: Attribution Share-Alike 4.0 International License
+-->
+<head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/>
+      <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+      <title>-=][CharGen][=-</title>
+      <link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono|Roboto+Mono|Source+Code+Pro|VT323|Inconsolata|Nanum+Gothic+Coding|Ubuntu+Mono" rel="stylesheet">
+      <link rel="stylesheet" href="./css/style.css">
+      <link rel="stylesheet" href="./css/colors.css">
+      <link rel="stylesheet" href="./css/crt.css">
+      <link rel="stylesheet" href="./css/icons.css">
+      <!--jquery Stuff-->
+      <script src="./js/jquery/jquery-3.3.1.min.js"></script>
+      <script src="./js/jquery/jquery-ui-1.12.1/jquery-ui.js"></script>
+      <link rel="stylesheet" href="./js/jquery/themes/themes/base/jquery-ui.css">
+      <link rel="stylesheet" href="./js/jquery/themes/themes/base/theme.css">
+
+      <script src="https://www.darkstonemud.com:8181/socket.io/socket.io.js"></script>
+      <script src="./js/aux.js"></script>
+      <script src="./js/interpret.js"></script>
+      <script src="./js/main.js"></script>
+      <script src="./js/ui.js"></script>
+   </head>
+<body>
+
+   <div id='chargen-wrapper'>
+      <div class='label' id='player-name'>Character Generation</div>
+      <div id'name-input-window'>
+         <input type='text' placeholder='Name'> <input type='button' value='Random Name'>
+      </div>
+      <div id='stat-window'>
+         <input type='number' min='1' max='10' value='5' class='stat-clicker' id='stat-brains'><br>
+         <input type='number' min='1' max='10' value='5' class='stat-clicker' id='stat-brawn'><br>
+         <input type='number' min='1' max='10' value='5' class='stat-clicker' id='stat-senses'><br>
+         <input type='number' min='1' max='10' value='5' class='stat-clicker' id='stat-stamina'><br>
+         <input type='number' min='1' max='10' value='5' class='stat-clicker' id='stat-coordination'><br>
+         <input type='number' min='1' max='10' value='5' class='stat-clicker' id='stat-cool'><br>
+         <input type='number' min='1' max='10' value='5' class='stat-clicker' id='stat-luck'><br>
+      </div>
+   </div>
+   
+</body>
+</html>
