@@ -83,6 +83,8 @@
 .color-normal{ color: #C0C0C0; }
 .color-red{ color: #FF0000; }
 .color-objects{ color: #006400; }
+.color-combat{ color: darkred; font-weight: bold; font-style: italic; }
+.color-death{ color: #cdcdcd; font-style: italic; }
 
 .color-text{ color: #C0C0C0; }
 .color-{ color: #C0C0C0; }

@@ -10,6 +10,8 @@
    margin: 0px;
    padding: 0px;
    box-sizing: border-box;
+   color: var(--font-color);
+   font-family: monospace;
 }
 
 body
@@ -17,7 +19,7 @@ body
    background: #232526; /* fallback for old browsers */
    background: -webkit-linear-gradient(to top, #232526, #414345); /* Chrome 10-25, Safari 5.1-6 */
    background: linear-gradient(to top, #0f0f0f, #414345); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-   background-image: url( https://instagram.fric1-1.fna.fbcdn.net/vp/900560aa84c449e60ff13894a42b6018/5C4624DA/t51.2885-15/e35/43180158_1115293521959451_2680017221388638760_n.jpg );
+   background-image: url( '../images/bg2.png' );
    /*background-image: url( https://i.imgur.com/xQdYC7x.jpg );*/
    background-size: cover;
    background-position: center bottom;
@@ -40,7 +42,6 @@ body
    height: auto;
    padding: 10px;
    color: white;
-   font-family: 'Roboto Mono', monospace;
 }
 
 h1
@@ -101,7 +102,6 @@ h1
    box-sizing: content-box;
    width: 100%;
    height: 90%;
-   font-family: monospace;
    font-size: 16px;
    overflow-y: scroll;
    overflow-x: visible;
@@ -129,7 +129,6 @@ h1
    box-sizing: content-box;
    height: 97%;
    width: 100%;
-   font-family: monospace;
    font-size: 14px;
    overflow-y: scroll;
    overflow-x: visible;
@@ -145,7 +144,6 @@ h1
 {
    position: absolute;
    color: var(--font-color);
-   font-family: monospace;
    font-size: 16px;
    padding: 10px 10px 0px 10px;
    border: 1px solid var(--border-color);
@@ -275,8 +273,6 @@ a.output:hover
    font-weight: bold;
    padding: 10px;
    border: 1px solid var(--border-color);
-   box-shadow: 0 0 2px 1px var(--shadow-color);
-   font-family: 'Roboto mono', monospace;
 }
 
 input
@@ -289,8 +285,6 @@ input
    color: var(--font-color);
    font-weight: bold;
    border: 1px solid var(--border-color);
-   box-shadow: 0 0 2px 1px var(--shadow-color);
-   font-family: 'Roboto mono', monospace;
 }
 #connect
 {
@@ -418,7 +412,8 @@ input
    max-width: 50%;
 }
 
-#player-health-table, #skill-table
+//#player-health-table, #skill-table
+table
 {
    font: 'Roboto Mono', monospace;
    font-size: 1em;
@@ -450,25 +445,218 @@ li.contextlink:hover, li.contextDocLink:hover
    background-color: var(--border-color);
 }
 
-
-#chargen-wrapper
+.window
 {
    position: absolute;
    left: 50%;
-   transform: translateX( -50% );
-   top: 1em;
-   width: 45vw;
-   height: 85vh;
+   top: 50%;
+   transform: translate( -50%, -50% );
    color: var(--font-color);
    background: -webkit-linear-gradient(to bottom right, rgba(05,08,13,0.90), rgba(41,43,45,0.95) ); /* Chrome 10-25, Safari 5.1-6 */
    background: linear-gradient(to bottom right, rgba(05,08,13,0.90), rgba(41,43,45,0.95) ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-   padding: 0px 10px 10px 10px;
+   padding: 10px 10px 10px 10px;
    border: 1px solid var(--border-color);
    box-shadow: 0 0 2px 1px var(--shadow-color);
    padding: 1em;
 }
 
-.stat-clicker
+#chargen-wrapper
+{
+   min-width: 80em;
+   min-height: 47em;
+}
+
+#redit-wrapper
+{
+   min-width: 40em;
+}
+
+#oset-wrapper
+{
+   min-width: 60em;
+}
+
+#redit-room-description
+{
+   width: 100%;
+   height: 15em;
+   background-color: transparent;
+   padding: 5px;
+   resize: none;
+   margin-top: 3px;
+   border: 1px solid var(--border-color);
+}
+
+#redit-room-name
+{
+   width: 100%;
+}
+
+#admin-tools-select
+{
+   position: absolute;
+   right: 0%;
+   bottom: 0%;
+   color: black;
+}
+
+.chargen-row
+{
+   display: -webkit-flex;
+   display: flex;
+   -webkit-justify-content: space-between;
+   justify-content: space-between;
+   width: 100%;
+}
+
+#chargen-bottom-section
+{
+   display: -webkit-flex;
+   display: flex;
+   -webkit-justify-content: space-between;
+   justify-content:space-between;
+}
+
+#chargen-help-window
+{
+   width: 50%;
+}
+
+#chargen-stat-bonus-table
+{
+   border: 1px solid var(--border-color);
+   padding: 5px;
+}
+
+.chargen-bonus-what
+{
+   text-align: left;
+   padding-right: 15px;
+}
+
+.chargen-bonus
+{
+   text-align: right;
+}
+
+#stat-window
+{
+   width: 10em;
+   height: auto;
+}
+
+.stat-button-minus, .age-button-minus,
+.stat-button-plus,  .age-button-plus,
+.stat-value-input,  .age-value-input,
+.stats-points
+{
+   margin: 0px;
+   margin-bottom: 7px;
+   padding: 3px;
+   text-align: center;
+}
+
+.stat-button-minus, .age-button-minus,
+.stat-button-plus,  .age-button-plus
+{
+   cursor: pointer;
+   width: 2em;
+}
+
+.stat-value-input,  .age-value-input
 {
    width: 4em;
+   border-right: 0px solid transparent;
+   border-left: 0px solid transparent;
 }
+
+.stats-points
+{
+   width: 8em;
+}
+
+.chargen-radio
+{
+   height: 0;
+   width: 0;
+   opacity: 0;
+   left: -10000;
+   position: absolute;
+   z-index: -1000;
+}
+
+input+label
+{
+   padding: .5em;
+   margin-top: 1em;
+   cursor: pointer;
+   outline: 1px solid transparent;
+}
+
+input+label:hover
+{
+   outline: 1px solid var(--border-color);
+}
+
+input:checked+label
+{
+   background-color: var(--border-color);
+   outline: 1px solid var(--border-color);
+   color: black;
+}
+
+.input-label
+{
+   font-size: .95em;
+   border-bottom: 1px solid var(--border-color);
+   text-align: center;
+   width: 100%;
+}
+
+.stat-input-label
+{
+   font-size: .95em;
+   text-align: left;
+}
+.chargen-navbar
+{
+   position: absolute;
+   bottom: 1em;
+   left: 1em;
+   right: 1em;
+}
+
+.nav-button
+{
+   border: 1px solid var(--border-color);
+   text-align: center;
+   width: 8em;
+   cursor: pointer;
+}
+
+.nav-button:hover, .nav-button:focus
+{
+   background-color: var(--border-color);
+   color: black;
+}
+#name-input-div{ width: 17em;}
+#gender-input-div{ width: 16em;}
+#race-input-div{ width: 11em;}
+#age-input-div{ width: 9em;}
+#eyecolor-input-div{ width: 33em;}
+#eyeshape-input-div{ width: 33em;}
+#build-input-div{ width: 33em;}
+#haircolor-input-div{ width: 33em;}
+#hairstyle-input-div{ width: 33em;}
+#skincolor-input-div{ width: 33em;}
+#height-input-div{ width: 33em;}
+
+.has-focus:before{ content: "[";}
+.has-focus:after{ content: "]";}
+
+.has-focus2:before{ content: "[";margin-left:-0.60em;}
+.has-focus2:after{ content: "]";}
+/*
+.has-focus:before{ content: "\25B6";}
+.has-focus:after{ content: "\25C0";}
+*/

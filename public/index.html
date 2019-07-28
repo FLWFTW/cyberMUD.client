@@ -18,15 +18,16 @@
       <link rel="stylesheet" href="./css/icons.css">
       <!--jquery Stuff-->
       <script src="./js/jquery/jquery-3.3.1.min.js"></script>
-      <script src="./js/jquery/jquery-ui-1.12.1/jquery-ui.js"></script>
-      <link rel="stylesheet" href="./js/jquery/themes/themes/base/jquery-ui.css">
-      <link rel="stylesheet" href="./js/jquery/themes/themes/base/theme.css">
+      <script src="./js/jquery/jquery-ui/jquery-ui.js"></script>
+      <link rel="stylesheet" href="./js/jquery/jquery-ui/jquery-ui.css">
+      <link rel="stylesheet" href="./js/jquery/jquery-ui/jquery-ui.theme.css">
 
-      <script src="https://www.darkstonemud.com:8181/socket.io/socket.io.js"></script>
+      <script src="https://cybermud.net:8181/socket.io/socket.io.js"></script>
       <script src="./js/aux.js"></script>
       <script src="./js/interpret.js"></script>
       <script src="./js/main.js"></script>
-      <script src="./js/ui.js"></script>
+      <script src="./js/chargen.js"></script>
+      <script src="./js/build.js"></script>
    </head>
    <body>
       <div id='wrapper' class=''>
@@ -154,7 +155,7 @@
                      </div><!--globe-box-->
                      <div id='room'>
                         <span id='room-name' class='color-room-name'></span><br>
-                        <span id='room-desc' class='color-room-desc'></span><br>
+                        <p id='room-desc' class='color-room-desc'></p>
                         <span id='room-exits' class='ansi0'></span><br>
                      </div>
                   </div><!--overflow-wrap-->
@@ -191,6 +192,267 @@
       </div><!--wrapper-->
       <div id='contextmenu'>
       </div>
+
+<!-- -============OSET WINDOW===============- -->
+      <div id='oset-wrapper' class='window' hidden>
+         <div class='label'><span style='font-size:1.25em'>Object Editor</span><br><span style='font-size:1.1em'>#<span id='oset-object-vnum'></span</span></div>
+         <br>
+         <input type='text' id='oset-object-name' style='width:100%'><br>
+         <input type='text' id='oset-object-sdesc' style='width:100%'><br>
+         <input type='text' id='oset-object-ldesc' style='width:100%'><br>
+         <br>
+         <select style='color:black'>
+            <option value='none' selected>None</option>
+            <option value='head'>Head</option>
+            <option value='face'>Face</option>
+            <option value='eyes'>Eyes</option>
+            <option value='neck'>Neck</option>
+            <option value='body'>Body</option>
+            <option value='shoulders'>Shoulders</option>
+            <option value='arms'>Arms</option>
+            <option value='hands'>Hands</option>
+            <option value='waist'>Waist</option>
+            <option value='legs'>Legs</option>
+            <option value='feet'>Feet</option>
+            <option value='slung'>Slung</option>
+         </select>
+         <select style='color:black'>
+            <option value='unknown' selected>Unknown</option>
+            <option value='clothing'>Clothing</option>
+            <option value='armor'>Armor</option>
+            <option value='firearm'>Firearm</option>
+            <option value='blade'>Blade</option>
+            <option value='bludgeon'>Bludgeon</option>
+            <option value='electronics'>Electronics</option>
+            <option value='computer'>Computer</option>
+            <option value='machine'>Machine</option>
+            <option value='scrap'>Scrap</option>
+            <option value='furniture'>Furniture</option>
+            <option value='lockpick'>Lockpick</option>
+            <option value='sheath'>Sheath</option>
+            <option value='holster'>Holster</option>
+            <option value='container'>Container</option>
+            <option value='beverage'>Beverage</option>
+            <option value='magazine'>Magazine</option>
+            <option value='bullet'>Bullet</option>
+            <option value='book'>Book</option>
+            <option value='memory'>Memory</option>
+            <option value='chip'>Chip</option>
+            <option value='key'>Key</option>
+            <option value='corpse'>Corpse</option>
+            <option value='drug'>Drug</option>
+         </select>
+         <br><br>
+         <div class='chargen-row'><input type='button' id='oset-cancel' value='Cancel' class='nav-button'><input type='button' id='oset-save' value='Save' class='nav-button'></div>
+      </div>
+<!-- -=========END OSET WINDOW==============- -->
+
+<!-- -============REDIT WINDOW===============- -->
+      <div id='redit-wrapper' class='window' hidden>
+         <div class='label'><span style='font-size:1.25em'>Room Editor</span><br><span style='font-size:1.1em'>#<span id='redit-room-vnum'></span</span></div>
+         <br>
+         <input type='text' id='redit-room-name' val=' '><br>
+         <textarea id='redit-room-description' val=' '></textarea>
+         <br><br>
+         <div class='chargen-row'><input type='button' id='redit-cancel' value='Cancel' class='nav-button'><input type='button' id='redit-save' value='Save' class='nav-button'></div>
+      </div>
+<!-- -=========END REDIT WINDOW==============- -->
+
+      <div id='chargen-wrapper' class='window' hidden>
+         <div id='chargen-biographics'>
+            <div class='label'><span style='font-size:1.25em'>Citizen Registration</span><br><span style='font-size:1.1em'>Biographics</span></div>
+            <br>
+            <div class='chargen-row' style='width: 100%'>
+               <div id='name-input-div'>
+                  <div class='input-label' id='chargen-name-label'>Name</div><br>
+                  <input type='text' id='chargen-player-name' class='name-input-field' style='width:100%;margin-top:-.5em;'> 
+               </div>
+               <div id='gender-input-div' style='margin-left:3%'>
+                  <div class='input-label' id='chargen-gender-label'>Gender</div><br>
+                  <input type='radio' name='gender' value='male' id='gender-male' class='chargen-radio chargen-gender' ><label for='gender-male'>Male</label>
+                  <input type='radio' name='gender' value='female' id='gender-female' class='chargen-radio chargen-gender' ><label for='gender-female'>Female</label>
+                  <input type='radio' name='gender' value='nonbinary' id='gender-nonbinary' class='chargen-radio chargen-gender' checked><label for='gender-nonbinary'>Nonbinary</label>
+               </div>
+               <div id='race-input-div' style='margin-left:3%'>
+                  <div class='input-label' id='chargen-race-label'>Race</div><br>
+                  <input type='radio' name='race' value='human' class='chargen-radio chargen-race' id='race-human' checked><label for='race-human'>Human</label>
+                  <input type='radio' name='race' value='synthetic' class='chargen-radio chargen-race' id='race-synthetic'><label for='race-synthetic'>Synthetic</label>
+               </div>
+               <div id='age-input-div' style='margin-left:3%'>
+                  <div class='input-label' id='chargen-age-label'>Age</div><br>
+                  <input type='button' class='age-button-minus chargen-age' value='-' style='margin-top:-0.5em;'><input tabindex="9999" readonly type='text' class='age-value-input chargen-age' id='stat-age' value='18' style='margin-top:-0.5em;'><input tabindex="9999" type='button' class='age-button-plus chargen-age' value='+' style='margin-top:-0.5em;'>
+               </div>
+            </div><!--top-row-->
+            <br>
+            <div id='chargen-bottom-section'>
+               <div id='stat-window'>
+                  <div id='brains-input-div'>
+                     <div class='stat-input-label' id='chargen-brains-label'>Brains</div>
+                     <input type='button' class='stat-button-minus chargen-brains' value='-'><input tabindex="9999" readonly type='text' class='stat-value-input chargen-brains' id='stat-brains' value='5'><input tabindex="9999" type='button' class='stat-button-plus chargen-brains' value='+'>
+                  </div>
+                  <div id='brawn-input-div'>
+                     <div class='stat-input-label' id='chargen-brawn-label'>Brawn</div>
+                     <input type='button' class='stat-button-minus chargen-brawn' value='-'><input tabindex="9999" readonly type='text' class='stat-value-input chargen-brawn' id='stat-brawn' value='5'><input tabindex="9999" type='button' class='stat-button-plus chargen-brawn' value='+'>
+                  </div>
+                  <div id='senses-input-div'>
+                     <div class='stat-input-label' id='chargen-senses-label'>Senses</div>
+                     <input type='button' class='stat-button-minus chargen-senses' value='-'><input tabindex="9999" readonly type='text' class='stat-value-input chargen-senses' id='stat-senses' value='5'><input tabindex="9999" type='button' class='stat-button-plus chargen-senses' value='+'>
+                  </div>
+                  <div id='stamina-input-div'>
+                     <div class='stat-input-label' id='chargen-stamina-label'>Stamina</div>
+                     <input type='button' class='stat-button-minus chargen-stamina' value='-'><input tabindex="9999" readonly type='text' class='stat-value-input chargen-stamina' id='stat-stamina' value='5'><input tabindex="9999" type='button' class='stat-button-plus chargen-stamina' value='+'>
+                  </div>
+                  <div id='coordination-input-div'>
+                     <div class='stat-input-label' id='chargen-coordination-label'>Coordination</div>
+                     <input type='button' class='stat-button-minus chargen-coordination' value='-'><input tabindex="9999" readonly type='text' class='stat-value-input chargen-coordination' id='stat-coordination' value='5'><input tabindex="9999" type='button' class='stat-button-plus chargen-coordination' value='+'>
+                  </div>
+                  <div id='cool-input-div'>
+                     <div class='stat-input-label' id='chargen-cool-label'>Cool</div>
+                     <input type='button' class='stat-button-minus chargen-cool' value='-'><input tabindex="9999" readonly type='text' class='stat-value-input chargen-cool' id='stat-cool' value='5'><input tabindex="9999" type='button' class='stat-button-plus chargen-cool' value='+'>
+                  </div>
+                  <div id='luck-input-div'>
+                     <div class='stat-input-label' id='chargen-luck-label'>Luck</div>
+                     <input type='button' class='stat-button-minus chargen-luck' value='-'><input tabindex="9999" readonly type='text' class='stat-value-input chargen-luck' id='stat-luck' value='5'><input tabindex="9999" type='button' class='stat-button-plus chargen-luck' value='+'>
+                  </div>
+                  <span class='stat-input-label'>Points Remaining</span><br><input tabindex="9999" readonly type='text' class='stats-points' value='5'>
+                  <br>
+               </div>
+               <div id='chargen-help-window'>
+               </div>
+               <div id='chargen-data-window'>
+                  <table id='chargen-stat-bonus-table'>
+                     <tr id='chargen-base-health-row'>
+                        <td class='chargen-bonus-what'>Base Health</td><td id='chargen-base-health' class='chargen-bonus'>150</td>
+                     </tr>
+                     <tr id='chargen-crit-chance-row'>
+                        <td class='chargen-bonus-what'>Critical Chance</td><td id='chargen-crit-chance' class='chargen-bonus'>4.5%</td>
+                     </tr>
+                     <tr id='chargen-carry-capacity-row'>
+                        <td class='chargen-bonus-what'>Carrying Capacity</td><td id='chargen-carry-capacity' class='chargen-bonus'>125kg</td>
+                     </tr>
+                     <tr id='chargen-heal-rate-row'>
+                        <td class='chargen-bonus-what'>Healing Rate</td><td id='chargen-heal-rate' class='chargen-bonus'>2</td>
+                     </tr>
+                     <tr id='chargen-exp-bonus-row'>
+                        <td class='chargen-bonus-what'>Experience Gain Bonus</td><td id='chargen-exp-bonus' class='chargen-bonus'>12.5%</td>
+                     </tr>
+                  </table>
+               </div>
+            </div><!--bottom-section-->
+            <br>
+            <div id='chargen-navbar-biographics' class='chargen-navbar'>
+               <input type='button' class='nav-button' id='chargen-nav-cancel' value='Cancel'>
+               <input type='button' class='nav-button' id='chargen-nav-next' value='Next' style='float: right'>
+            </div><!--chargen-navbar-->
+   <!--*****************************************************************************-->
+         </div><!--chargen-biographics-->
+         <div id='chargen-physicals' hidden>
+            <div class='label'><span style='font-size:1.25em'>Citizen Registration</span><br><span style='font-size:1.1em'>Physicals</span></div>
+            <br>
+            <div class='chargen-row'>
+               <div id='chargen-eyecolor'>
+                  <div id='eyecolor-input-div'>
+                     <div class='input-label' id='chargen-eyecolor-label'>Eye Color</div><br>
+                     <input type='radio' name='eyecolor' value='black' class='chargen-radio' id='eyecolor-black'><label for='eyecolor-black' checked>Black</label>
+                     <input type='radio' name='eyecolor' value='brown' class='chargen-radio' id='eyecolor-brown'><label for='eyecolor-brown'>Brown</label>
+                     <input type='radio' name='eyecolor' value='hazel' class='chargen-radio' id='eyecolor-hazel'><label for='eyecolor-hazel'>Hazel</label>
+                     <input type='radio' name='eyecolor' value='green' class='chargen-radio' id='eyecolor-green'><label for='eyecolor-green'>Green</label>
+                     <input type='radio' name='eyecolor' value='blue' class='chargen-radio' id='eyecolor-blue'><label for='eyecolor-blue'>Blue</label>
+                     <input type='radio' name='eyecolor' value='grey' class='chargen-radio' id='eyecolor-grey'><label for='eyecolor-grey'>Grey</label>
+                     <input type='radio' name='eyecolor' value='gold' class='chargen-radio' id='eyecolor-gold'><label for='eyecolor-gold'>Gold</label>
+                  </div><!--eyecolor-input-div-->
+               </div><!--chargen-eyecolor-->
+               <div id='chargen-eyeshape'>
+                  <div id='eyeshape-input-div'>
+                     <div class='input-label' id='chargen-eyeshape-label'>Eye Shape</div><br>
+                     <input type='radio' name='eyeshape' value='round' class='chargen-radio' id='eyeshape-round' checked><label for='eyeshape-round'>Round</label>
+                     <input type='radio' name='eyeshape' value='wide' class='chargen-radio' id='eyeshape-wide'><label for='eyeshape-wide'>Wide</label>
+                     <input type='radio' name='eyeshape' value='almond' class='chargen-radio' id='eyeshape-almond'><label for='eyeshape-almond'>Almond</label>
+                     <input type='radio' name='eyeshape' value='narrow' class='chargen-radio' id='eyeshape-narrow'><label for='eyeshape-narrow'>Narrow</label>
+                     <input type='radio' name='eyeshape' value='angled' class='chargen-radio' id='eyeshape-angled'><label for='eyeshape-angled'>Angled</label>
+                     <input type='radio' name='eyeshape' value='slanted' class='chargen-radio' id='eyeshape-slanted'><label for='eyeshape-slanted'>Slanted</label>
+                  </div><!--eyeshape-input-div-->
+               </div><!--chargen-eyeshape-->
+            </div><!--chargen-row-->
+            <br><br>
+            <div class='chargen-row'>
+               <div id='chargen-haircolor'>
+                  <div id='haircolor-input-div'>
+                     <div class='input-label' id='chargen-haircolor-label'>Hair Color</div><br>
+                     <input type='radio' name='haircolor' value='black' class='chargen-radio' id='haircolor-black' checked><label for='haircolor-black'>Black</label>
+                     <input type='radio' name='haircolor' value='brown' class='chargen-radio' id='haircolor-brown'><label for='haircolor-brown'>Brown</label>
+                     <input type='radio' name='haircolor' value='blond' class='chargen-radio' id='haircolor-blond'><label for='haircolor-blond'>Blond</label>
+                     <input type='radio' name='haircolor' value='auburn' class='chargen-radio' id='haircolor-auburn'><label for='haircolor-auburn'>Auburn</label>
+                     <input type='radio' name='haircolor' value='red' class='chargen-radio' id='haircolor-red'><label for='haircolor-red'>Red</label>
+                     <input type='radio' name='haircolor' value='grey' class='chargen-radio' id='haircolor-grey'><label for='haircolor-grey'>Grey</label>
+                     <input type='radio' name='haircolor' value='white' class='chargen-radio' id='haircolor-white'><label for='haircolor-white'>White</label>
+                  </div><!--haircolor-input-div-->
+               </div><!--chargen-haircolor-->
+               <div id='chargen-hairstyle'>
+                  <div id='hairstyle-input-div'>
+                     <div class='input-label' id='chargen-hairstyle-label'>Hair Style</div><br>
+                     <input type='radio' name='hairstyle' value='bald' class='chargen-radio' id='hairstyle-bald' checked><label for='hairstyle-bald'>Bald</label>
+                     <input type='radio' name='hairstyle' value='buzzed' class='chargen-radio' id='hairstyle-buzzed'><label for='hairstyle-buzzed'>Buzzed</label>
+                     <input type='radio' name='hairstyle' value='short' class='chargen-radio' id='hairstyle-short'><label for='hairstyle-short'>Short</label>
+                     <input type='radio' name='hairstyle' value='medium' class='chargen-radio' id='hairstyle-medium'><label for='hairstyle-medium'>Medium</label>
+                     <input type='radio' name='hairstyle' value='curly' class='chargen-radio' id='hairstyle-curly'><label for='hairstyle-curly'>Curly</label>
+                     <input type='radio' name='hairstyle' value='braided' class='chargen-radio' id='hairstyle-braided'><label for='hairstyle-braided'>Braided</label>
+                     <input type='radio' name='hairstyle' value='long' class='chargen-radio' id='hairstyle-long'><label for='hairstyle-long'>Long</label>
+                  </div><!--hairstyle-input-div-->
+               </div><!--chargen-haircolor-->
+            </div><!--chargen-row-->
+            <br><br>
+            <div class='chargen-row'>
+               <div id='chargen-skincolor'>
+                  <div id='skincolor-input-div'>
+                     <div class='input-label' id='chargen-skincolor-label'>Skin Color</div><br>
+                     <input type='radio' name='skincolor' value='pale' class='chargen-radio' id='skincolor-pale' checked><label for='skincolor-pale'>Pale</label>
+                     <input type='radio' name='skincolor' value='white' class='chargen-radio' id='skincolor-white'><label for='skincolor-white'>White</label>
+                     <input type='radio' name='skincolor' value='tan' class='chargen-radio' id='skincolor-tan'><label for='skincolor-tan'>Tan</label>
+                     <input type='radio' name='skincolor' value='olive' class='chargen-radio' id='skincolor-olive'><label for='skincolor-olive'>Olive</label>
+                     <input type='radio' name='skincolor' value='bronze' class='chargen-radio' id='skincolor-bronze'><label for='skincolor-bronze'>Bronze</label>
+                     <input type='radio' name='skincolor' value='brown' class='chargen-radio' id='skincolor-brown'><label for='skincolor-brown'>Brown</label>
+                     <input type='radio' name='skincolor' value='ebony' class='chargen-radio' id='skincolor-ebony'><label for='skincolor-ebony'>Ebony</label>
+                  </div>
+               </div><!--chargen-skincolor-->
+               <div id='chargen-build'>
+                  <div id='build-input-div'>
+                     <div class='input-label' id='chargen-build-label'>Build</div><br>
+                     <input type='radio' name='build' value='thin' class='chargen-radio' id='build-thin' checked><label for='build-thin'>Thin</label>
+                     <input type='radio' name='build' value='average' class='chargen-radio' id='build-average'><label for='build-average'>Average</label>
+                     <input type='radio' name='build' value='athletic' class='chargen-radio' id='build-athletic'><label for='build-athletic'>Athletic</label>
+                     <input type='radio' name='build' value='muscular' class='chargen-radio' id='build-muscular'><label for='build-muscular'>Muscular</label>
+                     <input type='radio' name='build' value='chubby' class='chargen-radio' id='build-chubby'><label for='build-chubby'>Chubby</label>
+                     <input type='radio' name='build' value='fat' class='chargen-radio' id='build-fat'><label for='build-fat'>Fat</label>
+                  </div><!--build-input-div-->
+               </div><!--chargen-build-->
+            </div><!--chargen-row-->
+            <br><br>
+            <div class='chargen-row'>
+               <div id='chargen-height'>
+                  <div id='height-input-div'>
+                     <div class='input-label' id='chargen-height-label'>Height</div><br>
+                     <input type='radio' name='height' value='petite' class='chargen-radio' id='height-petite'><label for='height-petite'>Petite</label>
+                     <input type='radio' name='height' value='short' class='chargen-radio' id='height-short'><label for='height-short'>Short</label>
+                     <input type='radio' name='height' value='average' class='chargen-radio' id='height-average' checked><label for='height-average'>Average</label>
+                     <input type='radio' name='height' value='tall' class='chargen-radio' id='height-tall'><label for='height-tall'>Tall</label>
+                     <input type='radio' name='height' value='towering' class='chargen-radio' id='height-towering'><label for='height-towering'>Towering</label>
+                  </div>
+               </div><!--chargen-height-->
+            </div><!--chargen-row-->
+            <br><br>
+            <div id='chargen-navbar-physicals' class='chargen-navbar'>
+               <input type='button' class='nav-button' id='chargen-nav-back' value='Back'>
+               <input type='button' class='nav-button' id='chargen-nav-submit' value='Submit' style='float: right'>
+            </div><!--chargen-navbar-->
+         </div>
+      </div><!--chargen-wrapper-->
+      <select id='admin-tools-select'>
+         <option value='none' selected>Building Tools</option>
+         <option value='redit'>Edit Room</option>
+         <option value='oset'>Edit Object</option>
+         <option value='mset'>Edit Mobile</option>
+      </select>
    </body>
 </html>
 

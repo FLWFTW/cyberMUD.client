@@ -174,7 +174,7 @@ function evalOstat( obj )
    writeTermRaw( "<tr><td>Short Desc: &nbsp;</td><td>" + obj.data.sdesc + "</td></tr>" );
    writeTermRaw( "<tr><td>Long Desc: &nbsp;</td><td>" + obj.data.ldesc + "</td></tr>" );
    writeTermRaw( "<tr><td>Wear Position: &nbsp;</td><td>" + obj.data.wear_pos_string + " (" + obj.data.wear_pos + ")</td></tr>" );
-   writeTermRaw( "<tr><td>Wear Position: &nbsp;</td><td>" + obj.data.type_string + " (" + obj.data.type + ")</td></tr>" );
+   writeTermRaw( "<tr><td>Type: &nbsp;</td><td>" + obj.data.type_string + " (" + obj.data.type + ")</td></tr>" );
    writeTermRaw( "<tr><td>Capacity (cm3): &nbsp;</td><td>" + ( "content_volume" in obj.data ? ( obj.data.content_volume + "/" ) : "" ) + obj.data.capacity + "</td></tr>" );
    writeTermRaw( "<tr><td>Volume (cm3): &nbsp;</td><td>" + obj.data.volume + "</td></tr>" );
    writeTermRaw( "</table><br>" );
@@ -346,7 +346,7 @@ function evalInventory( obj )
       let context = window.btoa( '[{"label":"wear","command":"wear '+guid+'", "echo":"wear &apos;'+sdesc+'&apos;"},{"label":"stow","command":"stow '+guid+'", "echo":"stow &apos;'+sdesc+'&apos;"},{"label":"drop","command":"drop '+guid+'", "echo":"drop &apos;'+sdesc+'&apos;"}]' );
 
       writeTermRaw( "<br>&nbsp&nbsp&nbsp<span class='color-normal'>Held in right hand</span>" );
-      writeTermRaw( "<br>&nbsp&nbsp&nbsp&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-guid='"+ guid + "' data-default='look " + guid + "' data-context='" + context + "'>"  + aoran(sdesc) +" "+ sanitize( sdesc ) + "</span>" );
+      writeTermRaw( "<br>&nbsp&nbsp&nbsp&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-guid='"+ guid + "' data-default='look " + guid + "' data-context='" + context + "'>" +" "+ sanitize( sdesc ) + "</span>" );
 
       if( "contents" in obj.data.right )
       {
@@ -354,7 +354,7 @@ function evalInventory( obj )
          {
             let guid = item.guid;
             let context = window.btoa( '[{"label":"get","command":"get ' + guid + " " + obj.data.right.object.guid + '", "echo":"get &apos;'+item.sdesc+'&apos; from &apos;'+sdesc+'&apos;"}]' );
-            writeTermRaw("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-default='' data-context='"+context+"'>"  + aoran(item.sdesc) +" "+ sanitize( item.sdesc ) + "</span>" );
+            writeTermRaw("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-default='' data-context='"+context+"'>"  + sanitize( item.sdesc ) + "</span>" );
          });
       }
    }
@@ -366,7 +366,7 @@ function evalInventory( obj )
       let context = window.btoa( '[{"label":"wear","command":"wear '+guid+'", "echo":"wear &apos;'+sdesc+'&apos;"},{"label":"stow","command":"stow '+guid+'", "echo":"stow &apos;'+sdesc+'&apos;"},{"label":"drop","command":"drop '+guid+'", "echo":"drop &apos;'+sdesc+'&apos;"}]' );
 
       writeTermRaw( "<br>&nbsp&nbsp&nbsp<span class='color-normal'>Held in left hand</span>" );
-      writeTermRaw( "<br>&nbsp&nbsp&nbsp&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-guid='"+ guid + "' data-default='look " + guid + "' data-context='" + context + "'>"  + aoran(sdesc) +" "+ sanitize( sdesc ) + "</span>" );
+      writeTermRaw( "<br>&nbsp&nbsp&nbsp&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-guid='"+ guid + "' data-default='look " + guid + "' data-context='" + context + "'>"  + " "+ sanitize( sdesc ) + "</span>" );
 
       if( "contents" in obj.data.left )
       {
@@ -374,7 +374,7 @@ function evalInventory( obj )
          {
             let guid = item.guid
             let context = window.btoa( '[{"label":"get","command":"get ' + guid + " " + obj.data.left.object.guid + '", "echo":"get &apos;'+sanitize(item.sdesc)+'&apos; from &apos;'+sanitize(sdesc)+'&apos;"}]' );
-            writeTermRaw("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-default='' data-context='"+context+"'>"  + aoran(item.sdesc) +" "+ sanitize( item.sdesc ) + "</span>" );
+            writeTermRaw("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-default='' data-context='"+context+"'>"  + " "+ sanitize( item.sdesc ) + "</span>" );
          });
       }
    }
@@ -387,11 +387,11 @@ function evalInventory( obj )
          let sdesc = item.sdesc;
          let guid = item.guid;
          let context = window.btoa( '[{"label":"remove","command":"remove '+guid+'", "echo":"remove &apos;'+sdesc+'&apos;"},{"label":"stow","command":"stow '+guid+'", "echo":"stow &apos;'+sdesc+'&apos;"},{"label":"drop","command":"drop '+guid+'", "echo":"drop &apos;'+sdesc+'&apos;"}]' );
-         writeTermRaw( "<br>&nbsp;&nbsp;&nbsp;<span class='color-normal object context' data-default='' data-context='"+context+"'>In " + aoran(item.sdesc) +" "+ sanitize( item.sdesc ) + "</span>" );
+         writeTermRaw( "<br>&nbsp;&nbsp;&nbsp;<span class='color-normal object context' data-default='' data-context='"+context+"'>In " + " "+ sanitize( item.sdesc ) + "</span>" );
          item.contents.forEach( function(content)
          {
             let context = window.btoa( '[{"label":"get","command":"get ' + content.guid + " " + item.guid + '", "echo":"get &apos;'+sanitize(content.sdesc)+'&apos; from &apos;'+sanitize(item.sdesc)+'&apos;"}]' );
-            writeTermRaw( "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-default='' data-context='"+context+"'>"  + aoran(content.sdesc) +" "+ sanitize( content.sdesc ) + "</span>" );
+            writeTermRaw( "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-default='' data-context='"+context+"'>"  + " "+ sanitize( content.sdesc ) + "</span>" );
          });
       });
    }
@@ -433,24 +433,53 @@ function evalUICommand( obj )
    console.log( obj );
    if( obj.data.text == "Show_all_windows" )
    {
-      $("#client").animate({height:"75vh"});
+      $("#client").show().animate({height:"75vh"});
       $("#left-window").animate({left:"0px"});
       $("#right-window").animate({right:"0px"});
       $("#bottom-window").animate({height:"20vh",padding:"10px"}, function(){$("#output").scrollTop( $("#output")[0].scrollHeight);});
       $("#bottom-show-hide").html("&#9660").css('top', '-0.5em');
       $("#left-show-hide").html( "&#9664;").css('right', '-0.5em' );
       $("#right-show-hide").html( "&#9654;").css('left', '-0.5em' );
+      $("#chargen-wrapper").hide();
+      $("#redit-wrapper").hide();
       
    }
    else if( obj.data.text == "Hide_all_windows" )
    {
-      $("#client").animate({height:"95vh"});
+      $("#client").show().animate({height:"95vh"});
       $("#left-window").animate({left:"-20vw"});
       $("#right-window").animate({right:"-20vw"});
       $("#bottom-window").animate({height:"0px", padding:"0px"}, function(){$("#output").scrollTop( $("#output")[0].scrollHeight);});
       $("#right-show-hide").html( "&#9664;").css('left', '-1em' );
       $("#left-show-hide").html( "&#9654;").css('right', '-1em' );
       $("#bottom-show-hide").html("&#9650").css('top', '-1em');
+      $("#chargen-wrapper").hide();
+   }
+   else if( obj.data.text == "chargen_menu" )
+   {
+      $("#left-window").animate({left:"-20vw"});
+      $("#right-window").animate({right:"-20vw"});
+      $("#bottom-window").animate({height:"0px", padding:"0px"}, function(){$("#output").scrollTop( $("#output")[0].scrollHeight);});
+      $("#right-show-hide").html( "&#9664;").css('left', '-1em' );
+      $("#left-show-hide").html( "&#9654;").css('right', '-1em' );
+      $("#bottom-show-hide").html("&#9650").css('top', '-1em');
+      $("#client").animate({height:"0vh"}).hide();
+      $("#chargen-wrapper").show();
+   }
+   else if( obj.data.text == "redit" )
+   {
+      $("#redit-room-name").val( obj.data.room.name );
+      $("#redit-room-desc").val( obj.data.room.description );
+      $("#redit-room-vnum").html( obj.data.room.vnum );
+      $("#redit-wrapper").show();
    }
 }
 
+function evalBuildRoomData( obj )
+{
+   console.log( obj );
+   $("#redit-room-name").val( obj.data.room.name );
+   $("#redit-room-description").val( obj.data.room.description );
+   $("#redit-room-vnum").html( obj.data.room.vnum );
+   $("#redit-wrapper").show();
+}

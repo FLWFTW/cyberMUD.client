@@ -140,6 +140,15 @@ function processJsonData()
             writeTermRaw( "</table><br>" );
             break;
          }
+      case 'mlist':
+         {
+            writeTermRaw( "<span class='ansi0'>Mobile List</span><br>" );
+            writeTermRaw( "<table>" );
+            writeTermRaw( "<tr><th>vnum&nbsp;&nbsp;&nbsp;</th><th>Name</th></tr>" );
+            obj.data.forEach( function( mob ){ writeTermRaw( "<tr><td>" + mob.vnum + "&nbsp;</td><td>" + sanitize(mob.name) + "</td></tr>" )});
+            writeTermRaw( "</table><br>" );
+            break;
+         }
       case 'room':
          evalRoom( obj );
          break;
@@ -151,6 +160,9 @@ function processJsonData()
          break;
       case 'ui_command':
          evalUICommand( obj );
+         break;
+      case 'build_room_data':
+         evalBuildRoomData( obj );
          break;
       default:
       {
