@@ -164,10 +164,36 @@ function evalSay( obj )
       writeTermRaw( "<span class='color-say'>You say, '" + sanitize( obj.data.message ) + "'</span><br>" );
 }
 
+function evalMstat( obj )
+{
+   writeTermRaw( "<span class-'ansi0'>MSTAT</span><br>" );
+   writeTermRaw( "<table class='stat'>" );
+   writeTermRaw( "<tr><td>Name: &nbsp;</td><td>" + obj.data.name + "</td><td>Vnum: &nbsp;</td><td>" + obj.data.vnum + "</td></tr>" );
+   writeTermRaw( "<tr><td>Sdesc: &nbsp;</td><td>" + obj.data.sdesc + "</td><td>Ldesc: &nbsp;</td><td>" + obj.data.ldesc + "</td></tr>" );
+   writeTermRaw( "<tr><td>Gender: &nbsp;</td><td>" + obj.data.gender + "</td><td>Race: &nbsp;</td><td>" + obj.data.race + "</td></tr>" );
+   writeTermRaw( "<tr><td>Citizenship: &nbsp;</td><td>" + obj.data.citizenship + "</td><td>Association: &nbsp;</td><td>" + obj.data.association + "</td></tr>" );
+   writeTermRaw( "<tr><td>Brains: &nbsp;</td><td>" + obj.data.brains + "</td></tr>" );
+   writeTermRaw( "<tr><td>Brawn: &nbsp;</td><td>" + obj.data.brawn + "</td></tr>" );
+   writeTermRaw( "<tr><td>Senses: &nbsp;</td><td>" + obj.data.senses + "</td></tr>" );
+   writeTermRaw( "<tr><td>Stamina: &nbsp;</td><td>" + obj.data.stamina + "</td></tr>" );
+   writeTermRaw( "<tr><td>Coordination: &nbsp;</td><td>" + obj.data.coordination + "</td></tr>" );
+   writeTermRaw( "<tr><td>Cool: &nbsp;</td><td>" + obj.data.cool + "</td></tr>" );
+   writeTermRaw( "<tr><td>Luck: &nbsp;</td><td>" + obj.data.luck + "</td></tr>" );
+   writeTermRaw( "<tr><td>Health: &nbsp;</td><td>" + obj.data.cur_hp + "/" + obj.data.max_hp + "</td><td>Position: &nbsp;</td><td>" + obj.data.position + " (" + obj.data.position_string + ")</td></tr>" );
+   writeTermRaw( "<tr><td>Height: &nbsp;</td><td>" + obj.data.height + "</td><td>Build: &nbsp;</td><td>" + obj.data.build + "</td></tr>" );
+   writeTermRaw( "<tr><td>Eye Shape: &nbsp;</td><td>" + obj.data.eyeshape + "</td><td>Eye Color: &nbsp;</td><td>" + obj.data.eyecolor + "</td></tr>" );
+   writeTermRaw( "<tr><td>Hair Style: &nbsp;</td><td>" + obj.data.hairstyle + "</td><td>Hair Color: &nbsp;</td><td>" + obj.data.eyecolor + "</td></tr>" );
+   writeTermRaw( "<tr><td>Skin Color: &nbsp;</td><td>" + obj.data.skincolor + "</td><td>Age: &nbsp;</td><td>" + obj.data.age + "</td></tr>" );
+   writeTermRaw( "<tr><td>Signal: &nbsp;</td><td>" + obj.data.signal + "</td><td>Encumberance: &nbsp;</td><td>" + obj.data.encumberance + "</td></tr>" );
+   writeTermRaw( "<tr><td>BTC: &nbsp;</td><td>" + obj.data.btc + "</td></tr>" );
+
+   writeTermRaw( "</table><br>" );
+}
+
 function evalOstat( obj )
 {
    writeTermRaw( "<span class='ansi0'>OSTAT</span><br>" );
-   writeTermRaw( "<table>" );
+   writeTermRaw( "<table class='stat'>" );
    writeTermRaw( "<tr><td>Name: &nbsp;</td><td>" + obj.data.name + "</td></tr>" );
    writeTermRaw( "<tr><td>Vnum: &nbsp;</td><td>" + obj.data.vnum + "</td></tr>" );
    writeTermRaw( "<tr><td>GUID: &nbsp;</td><td>" + obj.data.guid + "</td></tr>" );
@@ -185,7 +211,7 @@ function evalRoom( obj )
    writeTermRaw( "<span class='color-room-name'>" + sanitize( obj.data.name ) + "</span><br>" );
    $("#room-name").html( sanitize( obj.data.name ) );
    $("#room-desc").html( sanitize( obj.data.description ) );
-   writeTermRaw( "<span class='color-room-desc'>" + sanitize( obj.data.description ) + "</span><br>" );
+   writeTermRaw( "<p class='color-room-desc room-desc'>" + sanitize( obj.data.description ) + "</p>" );
    writeTermRaw( "<span class='ansi0'>Exits: </span>" );
    $(".globe-arrow").hide();
    let exitstring = "";
@@ -307,7 +333,7 @@ function evalRoom( obj )
    $("#room-exits").html( "<span class='ansi0'>Exits: </span>" + exitstring );
    if( obj.data.exits.length == 0 )
       writeTermRaw( "<span class='ansi0'>&nbsp;None</span>" );
-   writeTermRaw( ".<br>" );
+   writeTermRaw( "<br>" );
    obj.data.mobiles.forEach( function( mob )
          {
             let position = "";

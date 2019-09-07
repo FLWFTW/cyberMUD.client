@@ -163,8 +163,8 @@ h1
 #bottom-window
 {
    height: 0px;
-   padding: 0px;
-   width: 45vw;
+   padding: 5px;
+   width: 55vw;
    bottom: 0px;
    border-bottom: 0px solid transparent;
    left: 50%;
@@ -286,6 +286,12 @@ input
    font-weight: bold;
    border: 1px solid var(--border-color);
 }
+
+select
+{
+   color: black;
+}
+
 #connect
 {
    display: none;
@@ -313,13 +319,11 @@ input
 #globe-box
 {
    position: absolute;
-   left: 7.5%;
-   top: 50%;
-   transform: translate( -50%, -50% );
-   height: 5.0vw;
-   width: 5.0vw;
-   margin-top: auto;
-   margin-bottom: auto;
+   left: 50%;
+   top: 55%;
+   transform: translatex( -50% );
+   width: 15vw;
+   height: 15vw;
 }
 
 #globe, #outer-globe
@@ -369,20 +373,20 @@ input
    width: 100%;
    top: 0px;
    text-align: center;
-   font-size: calc(45vw/60);
+   font-size: calc(45vw/30);
    pointer-events: none;
 }
 
 #room
 {
    position: relative;
-   top: 50%;
-   left: 50%;
-   transform: translate( -50%, -50% );
+   top: 1.5em;
    font-size: calc( 45vw/60);
    animation: none;
    text-shadow: none;
-   width: 70%;
+   width: 95%;
+   margin-left: 2.5%;
+   margin-right: 2.5%;
 }
 
 #globe-northeast { transform: rotate( 45deg ); }
@@ -392,6 +396,11 @@ input
 #globe-southwest { transform: rotate( 225deg ); }
 #globe-west { transform: rotate( 270deg ); }
 #globe-northwest { transform: rotate( 315deg ); }
+
+.room-desc
+{
+   max-width: 60%;
+}
 
 #body-mesh
 {
@@ -421,6 +430,11 @@ table
    width: auto;
    position: relative;
    text-align: left;
+}
+
+table.stat
+{
+   padding-right: 5px;
 }
 
 #contextmenu
@@ -468,7 +482,11 @@ li.contextlink:hover, li.contextDocLink:hover
 
 #redit-wrapper
 {
-   min-width: 40em;
+   min-width: 50em;
+   position: absolute;
+   top: 20vh;
+   left: 50vw;
+   transform: translatex( -50% );
 }
 
 #oset-wrapper
@@ -489,7 +507,7 @@ li.contextlink:hover, li.contextDocLink:hover
 
 #redit-room-name
 {
-   width: 100%;
+   width: 60%;
 }
 
 #admin-tools-select
@@ -660,3 +678,4 @@ input:checked+label
 .has-focus:before{ content: "\25B6";}
 .has-focus:after{ content: "\25C0";}
 */
+

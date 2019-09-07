@@ -130,12 +130,6 @@
                <div id='location-window'>
                   <div class='label'>GEODATA</div>
                   <div id='location-data'>
-                  </div><!--location-data-->
-               </div><!--location-window-->
-            </div><!--right-window-->
-            <div id='bottom-window'>
-               <div id='bottom-show-hide'>&#9650;</div>
-               <div id='overflow-wrap'>
                      <div id='globe-box'>
                         <div id='outer-globe'>
                            <div id='globe'>
@@ -153,6 +147,12 @@
                            <div id='globe-southwest' class='globe-arrow' hidden><span class='direction' id='globe-southwest-arrow' data-direction='southwest' style='pointer-events:auto;'>&and;</span></div>
                         </div><!--outer-globe-->
                      </div><!--globe-box-->
+                  </div><!--location-data-->
+               </div><!--location-window-->
+            </div><!--right-window-->
+            <div id='bottom-window'>
+               <div id='bottom-show-hide'>&#9650;</div>
+               <div id='overflow-wrap'>
                      <div id='room'>
                         <span id='room-name' class='color-room-name'></span><br>
                         <p id='room-desc' class='color-room-desc'></p>
@@ -251,9 +251,41 @@
       <div id='redit-wrapper' class='window' hidden>
          <div class='label'><span style='font-size:1.25em'>Room Editor</span><br><span style='font-size:1.1em'>#<span id='redit-room-vnum'></span</span></div>
          <br>
-         <input type='text' id='redit-room-name' val=' '><br>
-         <textarea id='redit-room-description' val=' '></textarea>
+         <input type='text' id='redit-room-name' value='' autocomplete='off'>
+         <select id='redit-sector' style='width:38%;'>
+            <optgroup label='sectors' >
+               <option value='inside' selected>inside</option>
+               <option value='city'>city</option>
+               <option value='concrete'>concrete</option>
+               <option value='street'>street</option>
+               <option value='rooftop'>rooftop</option>
+               <option value='sewer'>sewer</option>
+               <option value='tunnel'>tunnel</option>
+               <option value='grass'>grass</option>
+               <option value='field'>field</option>
+               <option value='dirt'>dirt</option>
+               <option value='gravel'>gravel</option>
+               <option value='forest'>forest</option>
+               <option value='mountain'>mountain</option>
+               <option value='ocean'>ocean</option>
+               <option value='swamp'>swamp</option>
+               <option value='junkyard'>junkyard</option>
+               <option value='snow'>snow</option>
+               <option value='desert'>desert</option>
+               <option value='beach'>beach</option>
+               <option value='water'>water</option>
+               <option value='underwater'>underwater</option>
+               <option value='flying'>flying</option>
+            </optgroup>
+         </select><br>
+         <textarea id='redit-room-description' value=''></textarea>
          <br><br>
+         Exits:
+         <div id='redit-exits'>
+         </div><!--end-redit-exits-->
+         <a href='#' id='redit-add-exit' style='float:right'>(add exit)</a>
+         <br>
+         <br>
          <div class='chargen-row'><input type='button' id='redit-cancel' value='Cancel' class='nav-button'><input type='button' id='redit-save' value='Save' class='nav-button'></div>
       </div>
 <!-- -=========END REDIT WINDOW==============- -->

@@ -128,6 +128,9 @@ function processJsonData()
             writeTermRaw( "<span class='color-log'>" + "[LOG] " + sanitize( obj.data.message ) + "</span><br>" );
             break;
          }
+      case 'mstat':
+         evalMstat( obj );
+         break;
       case 'ostat':
          evalOstat( obj );
          break;
