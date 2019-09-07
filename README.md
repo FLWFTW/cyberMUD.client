@@ -1,3 +1,5 @@
+![banner](https://i.imgur.com/SNkUjqc.png)
+
 # cyberMUD.client
 Custom web client for the cyberMUD project (https://github.com/FLWFTW/cyberMUD)
 
