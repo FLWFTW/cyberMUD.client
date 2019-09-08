@@ -5,6 +5,7 @@ function getURLParameter(name) {
 var socket;
 var receivingJSON = false;
 var json_data;
+var local_ip;
 socket = io();
 
 var commands = {
@@ -360,7 +361,9 @@ $(document).ready(
                      }
                   case 'lookup':
                      {
+                        var ip = data.address;
                         writeTermRaw( '\n::Resolving host ' + data.host + ' port ' + data.port + '::\n<br>' );
+                        $("#local_ip").html( "Connected from: " + ip.slice( ip.lastIndexOf( ":" ) + 1 ) );
                         break;
                      }
                   case 'error':
