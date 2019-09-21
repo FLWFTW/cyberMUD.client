@@ -397,7 +397,7 @@ $(document).ready(
          {
             event.preventDefault();
             socket.emit( "command", $("#input").val() );
-            writeTermRaw( sanitize( $("#input").val() ) + "<br>" );
+            writeTermRaw( "<br>&gt;" + sanitize( $("#input").val() ) + "<br>" );
             $("#input").select();
          });
 

@@ -353,11 +353,29 @@ function evalRoom( obj )
                writeTermRaw( "<span class='color-mob mobile context' data-guid='" + mob.guid + "' data-default='look' data-context='" + context + "'>" + sanitize( mob.name ) + position + "</span><br>" );
          });
 
-   obj.data.objects.forEach( function( obj )
+   obj.data.objects.forEach( function( item )
          {
-            let context = window.btoa( '[{"label":"examine","command":"examine '+obj.guid+'", "echo":"examine &apos;'+obj.sdesc+'&apos;"},{"label":"stow","command":"stow '+obj.guid+'", "echo":"stow &apos;'+obj.sdesc+'&apos;"},{"label":"get","command":"get '+obj.guid+'", "echo":"get &apos;'+obj.sdesc+'&apos;"}]' );
-            writeTermRaw( "<span class='color-obj object context' data-guid='" + obj.guid + "' data-default='look' data-context='" + context + "'>" + sanitize( obj.ldesc ) + "</span><br>" );
-         });
+            item .count = 1;
+            for( var i = obj.data.objects.length -1; i > 0; i-- )
+            {
+               if( item == obj.data.objects[i] )
+                  break;
+               if( item .vnum == obj.data.objects[i].vnum )
+               {
+                  item.count++;
+                  obj.data.objects.splice(i,1);
+               }
+            }
+            let context = window.btoa( '[{"label":"examine","command":"examine '+item.guid+'", "echo":"examine &apos;'+item.sdesc+'&apos;"},{"label":"stow","command":"stow '+item.guid+'", "echo":"stow &apos;'+item.sdesc+'&apos;"},{"label":"get","command":"get '+item.guid+'", "echo":"get &apos;'+item.sdesc+'&apos;"}]' );
+            if( item.count > 1 )
+            {
+               writeTermRaw( "<span class='color-obj object context' data-guid='" + item.guid + "' data-default='look' data-context='" + context + "'>" + sanitize( item.ldesc ) + " (" + item.count +")</span><br>" );
+            }
+            else
+            {
+               writeTermRaw( "<span class='color-obj object context' data-guid='" + item.guid + "' data-default='look' data-context='" + context + "'>" + sanitize( item.ldesc ) + "</span><br>" );
+            }
+      });
 }
 
 function evalInventory( obj )
@@ -376,12 +394,7 @@ function evalInventory( obj )
 
       if( "contents" in obj.data.right )
       {
-         obj.data.right.contents.forEach( function(item)
-         {
-            let guid = item.guid;
-            let context = window.btoa( '[{"label":"get","command":"get ' + guid + " " + obj.data.right.object.guid + '", "echo":"get &apos;'+item.sdesc+'&apos; from &apos;'+sdesc+'&apos;"}]' );
-            writeTermRaw("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-default='' data-context='"+context+"'>"  + sanitize( item.sdesc ) + "</span>" );
-         });
+         listContents( obj.data.right, 9 );
       }
    }
    if( "left" in obj.data )
@@ -396,12 +409,7 @@ function evalInventory( obj )
 
       if( "contents" in obj.data.left )
       {
-         obj.data.left.contents.forEach( function(item)
-         {
-            let guid = item.guid
-            let context = window.btoa( '[{"label":"get","command":"get ' + guid + " " + obj.data.left.object.guid + '", "echo":"get &apos;'+sanitize(item.sdesc)+'&apos; from &apos;'+sanitize(sdesc)+'&apos;"}]' );
-            writeTermRaw("<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-default='' data-context='"+context+"'>"  + " "+ sanitize( item.sdesc ) + "</span>" );
-         });
+         listContents( obj.data.left, 9 );
       }
    }
 
@@ -414,11 +422,7 @@ function evalInventory( obj )
          let guid = item.guid;
          let context = window.btoa( '[{"label":"remove","command":"remove '+guid+'", "echo":"remove &apos;'+sdesc+'&apos;"},{"label":"stow","command":"stow '+guid+'", "echo":"stow &apos;'+sdesc+'&apos;"},{"label":"drop","command":"drop '+guid+'", "echo":"drop &apos;'+sdesc+'&apos;"}]' );
          writeTermRaw( "<br>&nbsp;&nbsp;&nbsp;<span class='color-normal object context' data-default='' data-context='"+context+"'>In " + " "+ sanitize( item.sdesc ) + "</span>" );
-         item.contents.forEach( function(content)
-         {
-            let context = window.btoa( '[{"label":"get","command":"get ' + content.guid + " " + item.guid + '", "echo":"get &apos;'+sanitize(content.sdesc)+'&apos; from &apos;'+sanitize(item.sdesc)+'&apos;"}]' );
-            writeTermRaw( "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='color-obj object context' data-default='' data-context='"+context+"'>"  + " "+ sanitize( content.sdesc ) + "</span>" );
-         });
+         listContents( item, 7 );
       });
    }
    if( hasInventory == false )
@@ -426,6 +430,36 @@ function evalInventory( obj )
       writeTermRaw( "<br><span class='color-red'>&nbsp;&nbsp;&nbsp;Nothing.</span>" );
    }
    writeTermRaw( "</span><br>" );
+}
+
+function listContents( obj, indent )
+{
+   obj.contents.forEach( function( item ) //Count and remove duplicates
+         {
+            item.count = 1;
+            for( var i = obj.contents.length -1; i > 0; i-- )
+            {
+               if( item == obj.contents[i] )
+                  break;
+               if( item.vnum == obj.contents[i].vnum )
+               {
+                  item.count++;
+                  obj.contents.splice(i,1);
+               }
+            }
+         });
+   obj.contents.forEach( function( item )
+         {
+            let context = window.btoa( '[{"label":"get","command":"get ' + item.guid + " " + obj.guid + '", "echo":"get &apos;'+sanitize(item.sdesc)+'&apos; from &apos;'+sanitize(obj.sdesc)+'&apos;"}]' );
+            if( item.count > 1 )
+            {
+               writeTermRaw( "<br>" + "&nbsp;".repeat(indent) + "<span class='color-obj object context' data-default='' data-context='"+context+"'>" + sanitize( item.sdesc ) + " (" + item.count + ")</span>" );
+            }
+            else
+            {
+               writeTermRaw( "<br>" + "&nbsp;".repeat(indent) + "<span class='color-obj object context' data-default='' data-context='"+context+"'>" + sanitize( item.sdesc ) + "</span>" );
+            }
+         });
 }
 
 function evalEquipment( obj )
@@ -459,7 +493,7 @@ function evalUICommand( obj )
    console.log( obj );
    if( obj.data.text == "Show_all_windows" )
    {
-      $("#client").show().animate({height:"75vh"});
+      //$("#client").show().animate({height:"75vh"});
       $("#left-window").animate({left:"0px"});
       $("#right-window").animate({right:"0px"});
       $("#bottom-window").animate({height:"20vh",padding:"10px"}, function(){$("#output").scrollTop( $("#output")[0].scrollHeight);});
@@ -497,6 +531,75 @@ function evalUICommand( obj )
       $("#redit-room-name").val( obj.data.room.name );
       $("#redit-room-desc").val( obj.data.room.description );
       $("#redit-room-vnum").html( obj.data.room.vnum );
+      obj.data.room.exits.forEach( function( exit )
+      {
+         $("#redit-exits").append( "<div class='redit-exit-row'><select class='redit-exit-direction'>" );
+         if( exit.name == 'north' )
+         {
+            $("#redit-exits").append( "<option value='north' selected>north</option><option value='south'>south</option><option value='east'>east</option><option value='west'>west</option><option value='northeast'>northeast</option><option value='southeast'>southeast</option><option value='northwest'>northwest</option><option value='southwest'>southwest</option><option value='up'>up</option><option value='down'>down</option></select>" );
+         }
+         else if( exit.name == 'south' )
+         {
+            $("#redit-exits").append( "<option value='north'>north</option><option value='south' selected>south</option><option value='east'>east</option><option value='west'>west</option><option value='northeast'>northeast</option><option value='southeast'>southeast</option><option value='northwest'>northwest</option><option value='southwest'>southwest</option><option value='up'>up</option><option value='down'>down</option></select>" );
+         }
+         else if( exit.name == 'east' )
+         {
+            $("#redit-exits").append( "<option value='north'>north</option><option value='south'>south</option><option value='east' selected>east</option><option value='west'>west</option><option value='northeast'>northeast</option><option value='southeast'>southeast</option><option value='northwest'>northwest</option><option value='southwest'>southwest</option><option value='up'>up</option><option value='down'>down</option></select>" );
+         }
+         else if( exit.name == 'west' )
+         {
+            $("#redit-exits").append( "<option value='north'>north</option><option value='south'>south</option><option value='east'>east</option><option value='west' selected>west</option><option value='northeast'>northeast</option><option value='southeast'>southeast</option><option value='northwest'>northwest</option><option value='southwest'>southwest</option><option value='up'>up</option><option value='down'>down</option></select>" );
+         }
+         else if( exit.name == 'northeast' )
+         {
+            $("#redit-exits").append( "<option value='north'>north</option><option value='south'>south</option><option value='east'>east</option><option value='west'>west</option><option value='northeast' selected>northeast</option><option value='southeast'>southeast</option><option value='northwest'>northwest</option><option value='southwest'>southwest</option><option value='up'>up</option><option value='down'>down</option></select>" );
+         }
+         else if( exit.name == 'southeast' )
+         {
+            $("#redit-exits").append( "<option value='north'>north</option><option value='south'>south</option><option value='east'>east</option><option value='west'>west</option><option value='northeast'>northeast</option><option value='southeast' selected>southeast</option><option value='northwest'>northwest</option><option value='southwest'>southwest</option><option value='up'>up</option><option value='down'>down</option></select>" );
+         }
+         else if( exit.name == 'northwest' )
+         {
+            $("#redit-exits").append( "<option value='north'>north</option><option value='south'>south</option><option value='east'>east</option><option value='west'>west</option><option value='northeast'>northeast</option><option value='southeast'>southeast</option><option value='northwest' selected>northwest</option><option value='southwest'>southwest</option><option value='up'>up</option><option value='down'>down</option></select>" );
+         }
+         else if( exit.name == 'southwest' )
+         {
+            $("#redit-exits").append( "<option value='north'>north</option><option value='south'>south</option><option value='east'>east</option><option value='west'>west</option><option value='northeast'>northeast</option><option value='southeast'>southeast</option><option value='northwest'>northwest</option><option value='southwest' selected>southwest</option><option value='up'>up</option><option value='down'>down</option></select>" );
+         }
+         else if( exit.name == 'up' )
+         {
+            $("#redit-exits").append( "<option value='north'>north</option><option value='south'>south</option><option value='east'>east</option><option value='west'>west</option><option value='northeast'>northeast</option><option value='southeast'>southeast</option><option value='northwest'>northwest</option><option value='southwest'>southwest</option><option value='up' selected>up</option><option value='down'>down</option></select>" );
+         }
+         else if( exit.name == 'down' )
+         {
+            $("#redit-exits").append( "<option value='north'>north</option><option value='south'>south</option><option value='east'>east</option><option value='west'>west</option><option value='northeast'>northeast</option><option value='southeast'>southeast</option><option value='northwest'>northwest</option><option value='southwest'>southwest</option><option value='up'>up</option><option value='down' selected>down</option></select>" );
+         }
+
+         $("#redit-exits").append("<input type='number' class='redit-exit-to-vnum' autocomplete='off' min='1' value='" + exit.to_vnum + "'>");
+         if( exit.lock_state == 0 )
+         {
+            $("#redit-exits").append( "<select class='redit-exit-state'><option value='free' selected>free</option><option value='jammed'>jammed</option><option value='closed'>closed</option><option value='open'>open</option><option value='broken'>broken</option></select>" );
+         }
+         else if( exit.lock_state == 1 )
+         {
+            $("#redit-exits").append( "<select class='redit-exit-state'><option value='free'>free</option><option value='jammed' selected>jammed</option><option value='closed'>closed</option><option value='open'>open</option><option value='broken'>broken</option></select>" );
+         }
+         else if( exit.lock_state == 2 )
+         {
+            $("#redit-exits").append( "<select class='redit-exit-state'><option value='free'>free</option><option value='jammed'>jammed</option><option value='closed' selected>closed</option><option value='open'>open</option><option value='broken'>broken</option></select>" );
+         }
+         else if( exit.lock_state == 3 )
+         {
+            $("#redit-exits").append( "<select class='redit-exit-state'><option value='free'>free</option><option value='jammed'>jammed</option><option value='closed'>closed</option><option value='open' selected>open</option><option value='broken'>broken</option></select>" );
+         }
+         else if( exit.lock_state == 4 )
+         {
+            $("#redit-exits").append( "<select class='redit-exit-state'><option value='free'>free</option><option value='jammed'>jammed</option><option value='closed'>closed</option><option value='open'>open</option><option value='broken' selected>broken</option></select>" );
+         }
+
+         $("#redit-exits").append( "<select class='redit-lock-type'><option value='pintumbler'>pintumbler</option><option value='combo'>combo</option><option value='electricpin'>electric</option><option value='fingerprint'>fingerprint</option><option value='remote'>remote</option></select><select class='redit-lock-state'><option value='free'>free</option><option value='jammed'>jammed</option><option value='locked'>locked</option><option value='unlocked'>unlocked</option></select>&nbsp;<span class='redit-exit-delete' style='font-weight:bold;cursor:pointer;'>&#10060;</span></div><!--end-exit-row-->" );
+      });
+                  
       $("#redit-wrapper").show();
    }
 }
