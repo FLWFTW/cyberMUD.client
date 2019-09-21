@@ -28,12 +28,14 @@
       <script src="./js/main.js"></script>
       <script src="./js/chargen.js"></script>
       <script src="./js/build.js"></script>
+      <script src="./js/ui.js"></script>
    </head>
    <body>
       <div id='wrapper' class=''>
          <div id='header'>
             <!-- <h1 class='title'>CyberMUD</h1>-->
          </div>
+            <div id='client-preferences-button'>&#9881;</div>
             <div id='left-window'>
                <div id='left-show-hide'>&#9654;</div>
                <div id='player-data'>
@@ -160,21 +162,35 @@
                   </div><!--overflow-wrap-->
                </div><!--bottom-window-->
           <div id='client'>
-            <div class='toolbar' id='toolbar' hidden>
-               <select id='font-size'> 
-                  <option value='8'>            8</option>
-                  <option value='10'>          10</option>
-                  <option value='12'>          12</option>
-                  <option value='14' selected> 14</option>
-                  <option value='16'>          16</option>
-                  <option value='18'>          18</option>
-                  <option value='20'>          20</option>
-                  <option value='22'>          22</option>
-                  <option value='24'>          24</option>
-                  <option value='28'>          28</option>
-                  <option value='36'>          36</option>
-               </select>
-            </div><!--toolbar-->
+             <div id='client-preferences' hidden>
+               <div id='client-font-preferences'>
+                  Font: <select id='font-family'>
+                     <option value="'Courier New', Courier, monospace">Courier New</option>
+                     <option value="'Lucida Console', 'Lucida Sans Typewriter', Monaco,  monospace">Lucida Console</option>
+                  </select>
+                  Size: <select id='font-size'> 
+                     <option value='8'>            8</option>
+                     <option value='10'>          10</option>
+                     <option value='12'>          12</option>
+                     <option value='14' selected> 14</option>
+                     <option value='16'>          16</option>
+                     <option value='18'>          18</option>
+                     <option value='20'>          20</option>
+                     <option value='22'>          22</option>
+                     <option value='24'>          24</option>
+                     <option value='28'>          28</option>
+                     <option value='36'>          36</option>
+                  </select>
+               </div><!--client-font-preferences-->
+               <div id='client-color-preferences'>
+                  Background: <input id='client-background-color' type='color'><br>
+                  Default: <input id='client-default-color' type='color'><input id='client-default-bold' type='checkbox'><input id='client-default-italic' type='checkbox'><br>
+                  Combat: <input id='client-combat-color' type='color'><input id='client-combat-bold' type='checkbox'><input id='client-combat-italic' type='checkbox'><br>
+                  Mobiles: <input id='client-mobiles-color' type='color'><input id='client-mobiles-bold' type='checkbox'><input id='client-mobiles-italic' type='checkbox'><br>
+                  Objects: <input id='client-objects-color' type='color'><input id='client-objects-bold' type='checkbox'><input id='client-objects-italic' type='checkbox'><br>
+               </div><!--client-color-preferences-->
+               <div class='chargen-row'><input type='button' id='client-preferences-cancel' value='Cancel' class='nav-button'><input type='button' id='client-preferences-save' value='Save' class='nav-button'></div>
+            </div><!--client-preferences-->
             <div id='output-wrapper'>
             <div id='output'> 
             </div><!--output-->

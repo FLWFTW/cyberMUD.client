@@ -5,7 +5,14 @@ Custom web client for the cyberMUD project (https://github.com/FLWFTW/cyberMUD)
 
 Based off the noMUDde project (https://github.com/FLWFTW/noMUDde)
 
-Screenshots:
-![client screenshot](https://i.imgur.com/nGeSmpR.jpg)
+### Screenshots:
 
-![client screenshot](https://i.imgur.com/W04KXeP.jpg)
+#### Combat
+![client screenshot](https://i.imgur.com/HTjKVHW.png)
+
+#### Building 
+![client screenshot](https://i.imgur.com/SPH3Sea.png)
+
+#### Client Interface
+![client screenshot](https://i.imgur.com/VeBmqTm.png)
+

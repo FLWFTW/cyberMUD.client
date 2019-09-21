@@ -522,6 +522,29 @@ li.contextlink:hover, li.contextDocLink:hover
    color: black;
 }
 
+#client-preferences
+{
+   position: absolute;
+   top: 20vh;
+   left: 50vw;
+   transform: translatex( -50% );
+   min-width: 50vw;
+   background-color: black;
+   z-index: 9999;
+   border: 1px solid var(--border-color);
+}
+
+#client-preferences-button
+{
+   display: none;
+   position: absolute;
+   top: 0vh;
+   right: 1vh;
+   font-size: 3em;
+   color: lightgrey;
+   cursor: pointer;
+}
+
 .chargen-row
 {
    display: -webkit-flex;
